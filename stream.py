@@ -1,39 +1,42 @@
+# example/st_app.py
+
 import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 import pandas as pd
-import openpyxl
 
-# Load the Excel file
-file_path = 'NAMAZ TIMINGS.xlsx'
-# excel_data = pd.read_excel(file_path)
+url = "https://docs.google.com/spreadsheets/d/1yDAJ-TICOgxF4AMY8FU8bYnplt-KAHplllWqyZdEy50/edit?gid=1569312511#gid=1569312511"
+# url = "https://docs.google.com/spreadsheets/d/1yDAJ-TICOgxF4AMY8FU8bYnplt-KAHplllWqyZdEy50/edit?usp=sharing"
 
-# st.table(pd.DataFrame({'Prayer': [ansar_prayer_name], 'Time': [ansar_time]}))
+conn = st.connection("gsheets", type=GSheetsConnection)
 
+data = conn.read(spreadsheet=url)
+# st.dataframe(data)
+
+
+
+df = pd.DataFrame(data)
 
 st.title("Namaz Timings")
 
 st.subheader("NOORANI Timings")
 
-noorani_prayer_names = ['FAJAR', 'ZOHAR', 'ASAR', 'MAGHRIB', 'ISHA']
+prayer_names = ['FAJAR', 'ZOHAR', 'ASAR', 'MAGHRIB', 'ISHA']
+noorani_time = [df.iloc[i, 2] for i in range(2,7)]
 
-wb = openpyxl.load_workbook(file_path)
-sheet = wb['Sheet1']
-
-C1 = sheet['C2'] # read direct value in cell C1
-noorani_time = [str(sheet[f"B{i}"].value)[:-3] for i in range(2,7)]
-
-st.table(pd.DataFrame({'Prayer': noorani_prayer_names, 'Time': noorani_time}))
-
+st.table(pd.DataFrame({'Prayer': prayer_names, 'Time': noorani_time}))
 
 
 st.subheader("ANSAR Timings")
 
-ansar_time = [str(sheet[f"D{i}"].value)[:-3] for i in range(2,7)]
+ansar_time = [df.iloc[i, 5] for i in range(2,7)]
 
-st.table(pd.DataFrame({'Prayer': noorani_prayer_names, 'Time': ansar_time}))
+st.table(pd.DataFrame({'Prayer': prayer_names, 'Time': ansar_time}))
 
 
 st.subheader("MARKAZ Timings")
 
-markaz_time = [str(sheet[f"F{i}"].value)[:-3] for i in range(2,7)]
 
-st.table(pd.DataFrame({'Prayer': noorani_prayer_names, 'Time': markaz_time} ))
+markaz_time = [df.iloc[i, 8] for i in range(2,7)]
+
+st.table(pd.DataFrame({'Prayer': prayer_names, 'Time': markaz_time}))
+
