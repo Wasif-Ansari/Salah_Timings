@@ -41,5 +41,5 @@ markaz_time = [df.iloc[i, 8] for i in range(2,7)]
 st.table(pd.DataFrame({'Prayer': prayer_names, 'Time': markaz_time}))
 
 
-st.write("Copyright &copy; Wasif Ansari")
+st.write(":green[Copyright &copy; Wasif Ansari]")
 
