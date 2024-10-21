@@ -9,7 +9,8 @@ url = "https://docs.google.com/spreadsheets/d/1yDAJ-TICOgxF4AMY8FU8bYnplt-KAHpll
 
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-data = conn.read(spreadsheet=url)
+ttl_seconds = 10
+data = conn.read(spreadsheet=url,ttl=ttl_seconds)
 # st.dataframe(data)
 
 
