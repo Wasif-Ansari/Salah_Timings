@@ -42,5 +42,11 @@ markaz_time = [df.iloc[i, 8] for i in range(2,7)]
 st.table(pd.DataFrame({'Prayer': prayer_names, 'Time': markaz_time}))
 
 
+def clear_my_cache():
+    st.cache_data.clear()
+
+st.button('Refresh Data', on_click=clear_my_cache)
+
+
 st.write(":green[Copyright &copy; Wasif Ansari]")
 
