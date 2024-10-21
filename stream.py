@@ -7,6 +7,8 @@ import pandas as pd
 url = "https://docs.google.com/spreadsheets/d/1yDAJ-TICOgxF4AMY8FU8bYnplt-KAHplllWqyZdEy50/edit?gid=1569312511#gid=1569312511"
 # url = "https://docs.google.com/spreadsheets/d/1yDAJ-TICOgxF4AMY8FU8bYnplt-KAHplllWqyZdEy50/edit?usp=sharing"
 
+st.cache_data.clear()
+
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 ttl_seconds = 10
@@ -41,11 +43,6 @@ markaz_time = [df.iloc[i, 8] for i in range(2,7)]
 
 st.table(pd.DataFrame({'Prayer': prayer_names, 'Time': markaz_time}))
 
-
-def clear_my_cache():
-    st.cache_data.clear()
-
-st.button('Refresh Data', on_click=clear_my_cache)
 
 
 st.write(":green[Copyright &copy; Wasif Ansari]")
